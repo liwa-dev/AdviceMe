@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  
+  <title>Frontend Mentor | Advice generator app</title>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@800&display=swap');
+    .attribution { font-size: 11px; text-align: center; }
+    .attribution a { color: hsl(228, 45%, 44%); }
+    body {  
+      background-color: hsl(218, 23%, 16%);
+      font-family: 'Manrope', sans-serif;
+      color: white;
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 90vh;
+      flex-direction: column;
+    }
+    .advice {
+      width: 350px;
+      height: 250px;
+      border-radius: 15px;
+      background-color: hsl(217, 19%, 24%);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 10px 10px 193px 18px rgba(0,0,0,0.3);
+      -webkit-box-shadow: 10px 10px 193px 18px rgba(0,0,0,0.3);
+      -moz-box-shadow: 10px 10px 193px 18px rgba(0,0,0,0.3);
+    }
+    .id {
+      position: relative;
+      bottom: 10%;
+      padding: 2%;
+      color: hsl(150, 100%, 66%);
+      margin-bottom: 10%;
+    }
+    .text {
+      position: relative;
+      bottom: 20%;
+      padding-left: 20px;
+      padding-right: 20px;
+      height: 100px;
+      line-height: 1;
+      text-align: center;
+      width: 100%;
+      overflow: hidden;
+      font-size: 25px;
+      text-indent: 10px;
+      color: hsl(212, 45%, 89%);
+    }
+
+    .line {
+      width: 80%;
+      height: 2px;
+      display: flex;
+    }
+    .line1 {
+      width: 42%;
+      height: 2px;
+      background-color: hsl(217, 19%, 38%);
+    }
+    .pause {
+      width: 2%;
+      position: relative;
+      left: 3px;
+      border-radius: 10px;
+      bottom: 5px;
+      margin-left: 3%;
+      height: 13px;
+      background-color: hsl(212, 45%, 89%);
+    }
+    .line2 {
+      width: 42%;
+      height: 2px;
+      position: relative;
+      left: 5%;
+      background-color: hsl(217, 19%, 38%);
+    }
+    .btn { 
+      width: 50px;
+      height: 50px;
+      border-radius: 100%;
+      position: relative;
+      bottom: 5%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: hsl(150, 100%, 66%);
+
+      box-shadow: 0;
+      transition: box-shadow 0.5s ease;
+    }
+    .btn:hover {
+      cursor: pointer;
+      box-shadow: 0 0 10px hsl(150, 100%, 66%), 0 0 40px hsl(150, 100%, 66%), 0 0 80px hsl(150, 100%, 66%);
+    }
+    @media (max-width: 768px) {
+      .advice {
+        height: 320px;
+      }
+  }
+
+  @media (max-width: 1000px) {
+      .advice {
+        height: 350px;
+      }
+      .btn {
+        bottom: 3%;
+      }
+  }
+
+  @media (max-width: 1280px) {
+      .advice {
+        height: 350px;
+      }
+      .btn {
+        bottom: 4%;
+      }
+  }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="advice">
+      <div class="id">ADVICE #177</div>
+      <div class="text">"It is easy to sit up and take
+        notice, what's difficult is getting
+        up and taking action."</div>
+      <div class="line">
+        <div class="line1"></div>
+        <div class="pause"></div>
+        <div class="pause"></div>
+        <div class="line2"></div>
+      </div>
+    </div>
+    <div class="btn" onclick="return interact();">
+      <img src="images/icon-dice.svg" alt="" srcset="">
+    </div>
+  </div>  
+  <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+    Coded by <a href="https://github.com/liwa-dev/">Liwa-Dev</a>.
+  </div>
+</body>
+
+<!-- JavaScript Bundle with Popper -->
+<script>
+  function interact() {
+    var text = document.querySelector(".text");
+    var id = document.querySelector(".id");
+    fetchApi().then(function(data) {
+      id.textContent = "ADVICE #" + data.id;
+      text.textContent = `"${data.advice}"`;
+    })
+  }
+
+
+  async function fetchApi() {
+    const url = "https://api.adviceslip.com/advice";
+    const response = await fetch(url);
+    const data = await response.json();
+    return data.slip
+  }
+</script>
+</html>
